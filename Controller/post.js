@@ -10,22 +10,25 @@ const post = async (req, res, next) => {
   let results = await new DB(req.body).save();
   Helper.helper(res, "user post text", results);
 };
+
 const allPost = async (req, res, next) => {
-  let findPost = await DB.find();
-  Helper.helper(res, "all post in here", findPost);
+  let post = await DB.find();
+  Helper.helper(res, "this is a all post ", post);
 };
+
 const getSingle = async (req, res, next) => {
-  let post = await DB.findById(req.params.id).populate("user").select("-__v");
+  let post = await DB.findById(req.params.id);
+  console.log(post);
   let comDb = await commentDB.find({ postId: post._id });
   post = post.toObject();
   post.comment = comDb;
-
   if (post) {
     Helper.helper(res, "get single user post", post);
   } else {
     next(new Error("user post with that id"));
   }
 };
+
 const pathData = async (req, res, next) => {
   let findID = await DB.findById(req.params.id);
   if (findID) {
@@ -36,6 +39,7 @@ const pathData = async (req, res, next) => {
     next(new Error("you can't update the other  user post info"));
   }
 };
+
 const deletePost = async (req, res, next) => {
   // await DB.findByIdAndDelete(req.params.id);
   // Helper.helper(res, "delete user post");
@@ -47,6 +51,7 @@ const deletePost = async (req, res, next) => {
     next(new Error("Post ID is not found"));
   }
 };
+
 const paginate = async (req, res, next) => {
   let page = req.params.page;
   let pages = page === 1 ? 0 : page - 1;
@@ -65,6 +70,7 @@ const byPost = async (req, res, next) => {
     next(new Error("Not user post id not found"));
   }
 };
+
 const addLike = async (req, res, next) => {
   let findID = await DB.findById(req.params.id);
   if (findID) {
@@ -74,6 +80,7 @@ const addLike = async (req, res, next) => {
     Helper.helper(res, "add like user post ", results);
   }
 };
+
 const reduceLike = async (req, res, next) => {
   let findID = await DB.findById(req.params.id);
   if (findID) {
@@ -83,6 +90,7 @@ const reduceLike = async (req, res, next) => {
     Helper.helper(res, "add like user post ", results);
   }
 };
+
 const toggleLike = async (req, res, next) => {
   let findID = await DB.findById(req.params.id);
   if (findID) {

@@ -1,5 +1,5 @@
 const DB = require("../Model/tag");
-
+const userData = require("../Model/user");
 const helper = require("../Utilites/helper");
 
 const all = async (req, res, next) => {
@@ -7,23 +7,19 @@ const all = async (req, res, next) => {
   helper.helper(res, "all tag info", results);
 };
 const add = async (req, res, next) => {
-  let findInfo = await DB.findOne({ name: req.body.name });
-  if (findInfo) {
-    next(new Error("You have been used this name"));
-  } else {
-    let results = await new DB(req.body).save();
-    helper.helper(res, "add tag info ", results);
-  }
+  let results = await new DB(req.body).save();
+  helper.helper(res, "add tag info ", results);
 };
 
 const getSingle = async (req, res, next) => {
-  if (getTag) {
-    helper.helper(res, "user tag only post", getTag);
+  let tag = await DB.findById(req.params.id);
+  if (tag) {
+    helper.helper(res, "get tag user", tag);
   } else {
-    next(new Error("Not found with that id in tag"));
+    next(new Error("Tag user is not found"));
   }
 };
-const path = async (req, res, next) => {
+const pathTag = async (req, res, next) => {
   let findId = await DB.findById(req.params.id);
   if (findId) {
     await DB.findByIdAndUpdate(findId._id, req.body);
@@ -46,6 +42,6 @@ module.exports = {
   all,
   add,
   getSingle,
-  path,
+  pathTag,
   deleteTag,
 };

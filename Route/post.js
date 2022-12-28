@@ -20,9 +20,11 @@ postRouter.get(
   validParams(id, "id"),
   postController.byPost
 );
+
 postRouter.get("/paginate/:page", postController.paginate);
 
 postRouter.post("/addlike/:id", validParams(id, "id"), postController.addLike);
+
 postRouter.post(
   "/reducelike/:id",
   validParams(id, "id"),

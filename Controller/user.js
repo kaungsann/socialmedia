@@ -1,6 +1,7 @@
 const Helper = require("../Utilites/helper");
 
 const DB = require("../Model/user");
+
 const all = async (req, res, next) => {
   let results = await DB.find().select("-__v -password ");
   Helper.helper(res, "get data ", results);
@@ -40,11 +41,11 @@ const login = async (req, res, next) => {
         new Error("Your are email & password is something wrong ,pls try again")
       );
     }
-    console.log(results);
   } else {
     next(new Error("You need to first Register"));
   }
 };
+
 const path = async (req, res, next) => {
   let findId = await DB.findById(req.params.id);
   if (findId) {
@@ -60,6 +61,7 @@ const getSingle = async (req, res, next) => {
   let findId = await DB.findById(req.params.id).select("-password -__v ");
   Helper.helper(res, "this is user get single info", findId);
 };
+
 const deleteUser = async (req, res, next) => {
   await DB.findByIdAndDelete(req.params.id);
   Helper.helper(res, "Delete your all info ");

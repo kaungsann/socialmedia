@@ -13,8 +13,10 @@ module.exports = {
       .required(),
   }),
   tagSchema: Joi.object({
+    userId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .required(),
     name: Joi.string().required(),
-    image: Joi.string().required(),
     user: Joi.optional(),
   }),
   commentSchema: Joi.object({

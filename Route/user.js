@@ -9,7 +9,7 @@ userRouter.post("/", userController.login);
 
 userRouter
   .route("/:id")
-  .post(vaildToken, validParams(id), userController.path)
+  .post(vaildToken, validParams(id, "id"), userController.path)
   .get(vaildToken, userController.getSingle)
   .delete(vaildToken, userController.deleteUser);
 module.exports = userRouter;

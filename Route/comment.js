@@ -1,8 +1,8 @@
 const commentRouter = require("express").Router();
 const commentController = require("../Controller/comment");
-const { commentSchema } = require("../Utilites/schema");
+const { commentSchema, id } = require("../Utilites/schema");
 const { saveFile } = require("../Utilites/gallery");
-const { validBody, vaildToken } = require("../Utilites/vlaid");
+const { validBody, vaildToken, validParams } = require("../Utilites/vlaid");
 
 commentRouter.get("/", commentController.all);
 
@@ -17,8 +17,7 @@ commentRouter.post(
 commentRouter.delete(
   "/:id",
   vaildToken,
-
-  validBody(commentSchema),
+  validParams(id, "id"),
   commentController.deleteComment
 );
 

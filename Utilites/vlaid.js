@@ -12,6 +12,7 @@ module.exports = {
       }
     };
   },
+
   validParams: (schema, name) => {
     return (req, res, next) => {
       let obj = {};

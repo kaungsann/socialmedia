@@ -5,17 +5,11 @@ const { tagSchema } = require("../Utilites/schema");
 const { validBody, vaildToken } = require("../Utilites/vlaid");
 
 tagRouter.get("/", tagController.all);
-tagRouter.post(
-  "/",
-  vaildToken,
-  saveFile,
-  validBody(tagSchema),
-  tagController.add
-);
+tagRouter.post("/", vaildToken, validBody(tagSchema), tagController.add);
 tagRouter
   .route("/:id")
   .get(tagController.getSingle)
-  .post(tagController.path)
+  .post(tagController.pathTag)
   .delete(tagController.deleteTag);
 
 module.exports = tagRouter;

@@ -1,4 +1,5 @@
 const DB = require("../Model/comment");
+
 const Helper = require("../Utilites/helper");
 
 const all = async (req, res, next) => {
@@ -7,9 +8,10 @@ const all = async (req, res, next) => {
 };
 
 const addComment = async (req, res, next) => {
-  let addCom = await new DB(req.body).save();
-  Helper.helper(res, "store comment data in server ", addCom);
+  let add = await new DB(req.body).save();
+  Helper.helper(res, "this is a addcomment", add);
 };
+
 const deleteComment = async (req, res, next) => {
   let findID = await DB.findById(req.params.id);
   if (findID) {

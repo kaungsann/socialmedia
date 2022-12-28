@@ -22,9 +22,14 @@ server.post("/gallery", saveFile);
 
 server.use("/user", userRouter);
 server.use("/post", postRouter);
-server.use("/tags", tagRouter);
+server.use("/tag", tagRouter);
 server.use("/comment", commentRouter);
 server.use("/upload", express.static(path.join(__dirname, "upload")));
+server.get("*", (req, res) => {
+  res.send({
+    mes: "No Route Found",
+  });
+});
 
 server.use((err, req, res, next) => {
   err.status = err.status || 500;
